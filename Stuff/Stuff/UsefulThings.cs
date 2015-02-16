@@ -31,5 +31,22 @@ namespace Stuff
             Thread.Sleep(500);
             Console.WriteLine(s);
         }
+
+
+        public static string RotateString(string s, int n = 1)
+        {
+            if (n < 0)
+                throw new ArgumentOutOfRangeException("n is out of range");
+
+            char[] build = new char[s.Length];
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                int nx = (i - n) >= 0 ? (i - n) : s.Length + i - n;
+                build[nx] = s[i];
+            }
+
+            return new string(build);
+        }
     }
 }
