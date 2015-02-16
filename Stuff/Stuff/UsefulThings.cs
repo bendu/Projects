@@ -32,6 +32,21 @@ namespace Stuff
             Console.WriteLine(s);
         }
 
+        public static int Factorial(int n)
+        {
+            if (n < 0)
+                throw new ArgumentOutOfRangeException();
+
+            int f = 1;
+
+            for (int i = 2; i <= n; i++)
+            {
+                f *= i;
+            }
+
+            return f;
+        }
+
 
         public static string RotateString(string s, int n = 1)
         {
@@ -47,6 +62,15 @@ namespace Stuff
             }
 
             return new string(build);
+        }
+
+        public static T[][] Premuations<T>(T[] a)
+        {
+            T[][] output = new T[Factorial(a.Length)][];
+
+
+
+            return output;
         }
     }
 }
