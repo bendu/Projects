@@ -64,13 +64,55 @@ namespace Stuff
             return new string(build);
         }
 
-        public static T[][] Premuations<T>(T[] a)
+        public static T[][] Permutations<T>(T[] a)
         {
-            T[][] output = new T[Factorial(a.Length)][];
+            return Permutations(a, 0);
+        }
 
+        private static T[][] Permutations<T>(T[] a, int index)
+        {
+            if (index >= a.Length)
+            {
+                // array with one empty array inside
+                T[][] basecase = new T[1][];
+                basecase[0] = new T[0];
+                return basecase;
+            }
 
+            T[][] result  = new T[Factorial(a.Length - index)][];
+            int next = 0;
 
-            return output;
+            T[][] results = Permutations(a, index + 1);
+
+            for (int j = 0; j < results.Length; j++)
+            {   
+                T[] someResult = results[j];
+                for (int k = 0; k <= someResult.Length; k++)
+                {
+                    result[next] = spliceIn(someResult, k, a[index]);
+                    next++;
+                }
+            }
+
+            return result;
+        }
+
+        public static T[] spliceIn<T>(T[] a, int pos, T val)
+        {
+            T[] spliced = new T[a.Length + 1];
+            for (int i = 0; i < pos; i++)
+            {
+                spliced[i] = a[i];
+            }
+            
+            spliced[pos] = val;
+
+            for (int i = pos; i < a.Length; i++)
+            {
+                spliced[i + 1] = a[i];
+            }
+
+            return spliced;
         }
     }
 }
