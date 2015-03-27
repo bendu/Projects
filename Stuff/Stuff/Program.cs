@@ -10,8 +10,8 @@ namespace Stuff
     {
         static void Main(string[] args)
         {
-            
 
+            Password.Start();
 
             Console.Write("Hit enter to exit ->");
             Console.ReadLine();

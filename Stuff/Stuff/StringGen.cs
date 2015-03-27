@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +14,28 @@ namespace Stuff
 
     class StringGen
     {
-        public const int repeat = 100;
+        public const int StringLength = 10;
 
-        static void Generate6Strings(string login, string site, string secret)
+
+        public static string[] Generate6Strings(string login, string site, string secret)
         {
+            string[] things = {login + 2201, site + 18882, secret + 544845};
+            string[][] permutations = UsefulThings.Permutations(things);
 
+            string[] gen = new string[6];
+
+            SHA256Managed sha = new SHA256Managed();
+
+            for (int i = 0; i < permutations.Length; i++)
+            {
+                string hash = sha256_hash(permutations[i][0] + permutations[i][1] + permutations[i][2]).Substring(0, StringLength);
+                char[] charArr = hash.ToCharArray();
+                Capitalize(charArr);
+                gen[i] = new String(charArr);
+            }
+
+
+            return gen;
         }
 
 
@@ -62,6 +80,22 @@ namespace Stuff
                 throw new ApplicationException("Could not translate modified state");
 
             return (char)r;
+        }
+
+        public static String sha256_hash(String value)
+        {
+            StringBuilder Sb = new StringBuilder();
+
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(value));
+
+                foreach (Byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+
+            return Sb.ToString();
         }
     }
 }

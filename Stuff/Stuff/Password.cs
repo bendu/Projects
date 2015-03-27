@@ -8,11 +8,8 @@ namespace Stuff
 {
     class Password
     {
-        static void Main(string[] args)
+        public static void Start()
         {
-            UsefulThings.DelayedWriteLine("Remembering passwords is tricky", 200);
-            UsefulThings.DelayedWriteLine("This should fix it");
-
             Console.Write("Secret phrase: ");
             string secret = Console.ReadLine();
 
@@ -22,8 +19,12 @@ namespace Stuff
             Console.Write("Login: ");
             string login = Console.ReadLine();
 
-            
+            string[] candidates = StringGen.Generate6Strings(login, website, secret);
 
+            foreach (string s in candidates)
+            {
+                Console.WriteLine(s);
+            }
 
             UsefulThings.DelayedWriteLine("Thanks for using Password Keeper!", 3000);
         }
